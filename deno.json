@@ -1,4 +1,4 @@
 {
-  "workspace": ["./packages/alea-frontend"],
+  "workspace": ["./packages/alea-frontend", "./packages/mmt-viewer"],
   "nodeModulesDir": "manual"
 }
