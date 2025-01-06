@@ -1,0 +1,4 @@
+{
+  "workspace": ["./packages/alea-frontend"],
+  "nodeModulesDir": "manual"
+}
