@@ -1,0 +1,5 @@
+{
+  "imports": {
+    "@stex-react/shtml-viewer": "../shtml-viewer/lib.ts"
+  }
+}
