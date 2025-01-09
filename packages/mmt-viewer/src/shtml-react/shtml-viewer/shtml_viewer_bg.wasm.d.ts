@@ -2,6 +2,7 @@
 /* eslint-disable */
 export const memory: WebAssembly.Memory;
 export const set_server_url: (a: number, b: number) => void;
+export const set_debug_log: () => void;
 export const render_document: (a: any, b: any, c: number, d: number) => [number, number, number];
 export const __wbg_shtmlmounthandle_free: (a: number, b: number) => void;
 export const shtmlmounthandle_unmount: (a: number) => void;
@@ -23,10 +24,11 @@ export const __wbindgen_realloc: (a: number, b: number, c: number, d: number) =>
 export const __wbindgen_exn_store: (a: number) => void;
 export const __externref_table_alloc: () => number;
 export const __wbindgen_export_4: WebAssembly.Table;
-export const __wbindgen_export_5: WebAssembly.Table;
+export const __wbindgen_free: (a: number, b: number, c: number) => void;
+export const __wbindgen_export_6: WebAssembly.Table;
 export const __externref_table_dealloc: (a: number) => void;
-export const _dyn_core__ops__function__FnMut_____Output___R_as_wasm_bindgen__closure__WasmClosure___describe__invoke__h79b8674778044267: (a: number, b: number) => void;
-export const closure43_externref_shim: (a: number, b: number, c: any) => void;
-export const closure81_externref_shim: (a: number, b: number, c: any, d: any) => void;
-export const closure202_externref_shim: (a: number, b: number, c: any) => number;
+export const _dyn_core__ops__function__FnMut_____Output___R_as_wasm_bindgen__closure__WasmClosure___describe__invoke__h251035ab0b24dc38: (a: number, b: number) => void;
+export const closure45_externref_shim: (a: number, b: number, c: any) => void;
+export const closure106_externref_shim: (a: number, b: number, c: any, d: any) => void;
+export const closure597_externref_shim: (a: number, b: number, c: any) => number;
 export const __wbindgen_start: () => void;

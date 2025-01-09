@@ -3,7 +3,12 @@ import { useState } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
-import { TestDocument } from "./stex-react-renderer/lib.tsx"
+import { TestDocument } from "./shtml-react/lib.tsx"
+
+import * as SHTML from "./shtml-react/shtml-viewer/shtml_viewer.js";
+
+SHTML.set_debug_log();
+SHTML.set_server_url("https://mmt.beta.vollki.kwarc.info");
 
 function App() {
   const [count, setCount] = useState(0)

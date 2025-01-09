@@ -5,10 +5,14 @@
  */
 export function set_server_url(server_url: string): void;
 /**
+ * activates debug logging
+ */
+export function set_debug_log(): void;
+/**
  * render an SHTML document to the provided element
  * #### Errors
  */
-export function render_document(to: HTMLElement, document: DocumentOptions, on_section_start?: ((uri: string) => Element | null), on_section_end?: ((uri: string) => Element | null)): SHTMLMountHandle;
+export function render_document(to: HTMLElement, document: DocumentOptions, on_section_start?: (uri: string) => (((HTMLDivElement) => void) | undefined), on_section_end?: (uri: string) => (((HTMLDivElement) => void) | undefined)): SHTMLMountHandle;
 /**
  * The `ReadableStreamType` enum.
  *
