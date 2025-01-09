@@ -1,5 +1,0 @@
-{
-  "name": "@stex-react/shtml-viewer",
-  "version": "0.0.1",
-  "exports":"./lib.ts"
-}
