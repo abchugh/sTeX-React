@@ -12,7 +12,36 @@ export function set_debug_log(): void;
  * render an SHTML document to the provided element
  * #### Errors
  */
-export function render_document(to: HTMLElement, document: DocumentOptions, on_section_start?: (uri: string) => (((HTMLDivElement) => void) | undefined), on_section_end?: (uri: string) => (((HTMLDivElement) => void) | undefined)): SHTMLMountHandle;
+export function render_document(to: HTMLElement, document: DocumentOptions, on_section_start?: (uri: string) => (LeptosContinuation | undefined) | null, on_section_end?: (uri: string) => (LeptosContinuation | undefined) | null, context?: LeptosContext | null): SHTMLMountHandle;
+/**
+ * render an SHTML document fragment to the provided element
+ * #### Errors
+ */
+export function render_fragment_with_cont(to: HTMLElement, fragment: FragmentOptions, context: LeptosContext | null | undefined, exercise_cont: (r:ExerciseResponse) => void): SHTMLMountHandle;
+/**
+ * render an SHTML document fragment to the provided element
+ * #### Errors
+ */
+export function render_fragment(to: HTMLElement, fragment: FragmentOptions, context?: LeptosContext | null, exercise_options?: ExerciseOption | null): SHTMLMountHandle;
+/**
+ * sets up a leptos context for rendering SHTML documents or fragments.
+ * If a context already exists, does nothing, so is cheap to call
+ * [render_document] and [render_fragment] also inject a context
+ * iff none already exists, so this is optional in every case.
+ */
+export function shtml_setup(to: HTMLElement, cont: LeptosContinuation): SHTMLMountHandle;
+/**
+ * The currently set server URL
+ */
+export function get_server_url(): string;
+/**
+ * #### Errors
+ */
+export function get_document_html(doc: string): Promise<HTMLFragment>;
+/**
+ * #### Errors
+ */
+export function get_paragraph_html(elem: string): Promise<HTMLFragment>;
 /**
  * The `ReadableStreamType` enum.
  *
@@ -31,11 +60,42 @@ type ReadableStreamType = "bytes";
 export type DocumentOptions = { FromBackend: { uri: string; toc: TOCOptions | undefined } } | { HtmlString: { html: string; toc: TOCElem[] | undefined } };
 
 /**
+ * Options for rendering an SHTML document fragment
+ * - `FromBackend`: calls the backend for the document fragment
+ *     uri: the URI of the document fragment (as string)
+ * - `HtmlString`: render the provided HTML String
+ *     html: the HTML String
+ */
+export type FragmentOptions = { FromBackend: { uri: string } } | { HtmlString: { uri: string | undefined; html: string } };
+
+/**
  * Options for rendering a table of contents
  * `FromBackend` will retrieve it from the remote backend
  * `Predefined(toc)` will render the provided TOC
  */
 export type TOCOptions = "FromBackend" | { Predefined: TOCElem[] };
+
+export type ExerciseOption = { WithFeedback: [string,ExerciseFeedback][] } | { WithSolutions: [string,Solutions][] };
+
+export interface HTMLFragment {
+    css: CSS[];
+    html: string;
+}
+
+/**
+ * Either a list of booleans (multiple choice), a single integer (single choice),
+ * or a string (fill-in-the-gaps)
+ */
+export type ExerciseResponseType = boolean[] | number | string;
+
+export interface ExerciseResponse {
+    uri: string;
+    responses: ExerciseResponseType[];
+}
+
+export type CSS = { Link: string } | { Inline: string };
+
+export type LeptosContinuation = (e:HTMLDivElement,o:LeptosContext) => void;
 
 /**
  * An entry in a table of contents. Either:
@@ -54,6 +114,13 @@ export type TOCElem = { Section: { title: string | undefined; uri: string; id: s
  */
 export type TOC = { Full: TOCElem[] } | { Get: string };
 
+export class ExerciseFeedback {
+  private constructor();
+  free(): void;
+  static from_json(json: string): ExerciseFeedback | undefined;
+  to_json(): string | undefined;
+  correct: boolean;
+}
 export class IntoUnderlyingByteSource {
   private constructor();
   free(): void;
@@ -76,6 +143,15 @@ export class IntoUnderlyingSource {
   pull(controller: ReadableStreamDefaultController): Promise<any>;
   cancel(): void;
 }
+export class LeptosContext {
+  private constructor();
+  free(): void;
+  /**
+   * Cleans up the reactive system.
+   * Not calling this is a memory leak
+   */
+  cleanup(): void;
+}
 export class SHTMLMountHandle {
   private constructor();
   free(): void;
@@ -84,4 +160,11 @@ export class SHTMLMountHandle {
    * Not calling this is a memory leak
    */
   unmount(): void;
+}
+export class Solutions {
+  private constructor();
+  free(): void;
+  static from_json(json: string): Solutions | undefined;
+  to_json(): string | undefined;
+  check_response(response: ExerciseResponse): ExerciseFeedback | undefined;
 }
