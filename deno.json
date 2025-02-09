@@ -3,8 +3,7 @@
     "./packages/alea-frontend",
     "./packages/ftml-react",
     "./packages/stex-react-renderer",
-    "./packages/utils",
-    "./packages/shtml-viewer"
+    "./packages/utils"
   ],
   "nodeModulesDir": "auto",
   "imports": {
