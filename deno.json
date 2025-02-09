@@ -1,11 +1,12 @@
 {
   "workspace": [
     "./packages/alea-frontend",
-    "./packages/mmt-viewer",
+    "./packages/ftml-react",
     "./packages/stex-react-renderer",
-    "./packages/utils"
+    "./packages/utils",
+    "./packages/shtml-viewer"
   ],
-  "nodeModulesDir": "manual",
+  "nodeModulesDir": "auto",
   "imports": {
     "@std/path": "jsr:@std/path@^1.0.8"
   }
