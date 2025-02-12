@@ -15,7 +15,7 @@
     "incremental": true,
     "paths": {
       "@/*": ["./src/*"],
-      "@stex-react/utils": ["../utils/lib.ts"],
+      "@stex-react/utils": ["../utils/src/index.ts"],
       "@stex-react/stex-react-renderer": ["../stex-react-renderer/lib.tsx"]
     },
     "plugins": [

@@ -1,10 +1,10 @@
 import { MyCompo } from "@/components/MyCompo";
 import styles from "@/styles/Home.module.css";
-import { getMMTCustomId } from "@stex-react/utils";
 import { Geist, Geist_Mono } from "next/font/google";
 import Head from "next/head";
 import Image from "next/image";
 import { SomeCompo } from "@stex-react/stex-react-renderer";
+import { getMMTCustomId } from "../../../utils/src/index.ts";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
