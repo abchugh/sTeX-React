@@ -22,14 +22,25 @@ export function useLeptosTunnel() {
   };
 
   const removeTunnel = () => {
+    if (tunnel) {
+      try{tunnel.context.cleanup();} catch (e){console.log("Error cleaning up leptos context:",e)}
+    }
     setTunnel(undefined);
   };
 
   const TunnelRenderer = () => (
       tunnel? 
-        createPortal(<WithLeptosContext context={tunnel.context}>{tunnel.node}</WithLeptosContext>, tunnel.element, tunnel.id)
+        createPortal(<SHTMLContext.Provider value={tunnel.context}>{tunnel.node}</SHTMLContext.Provider>, tunnel.element, tunnel.id)
         : <></>
   );
+
+  useEffect(() => {
+    return () => {
+      if (tunnel) {
+        try{tunnel.context.cleanup();} catch (e){console.log("Error cleaning up leptos context:",e)}
+      }
+    }
+  })
 
   return {
     addTunnel,
@@ -48,16 +59,29 @@ export function useLeptosTunnels() {
   };
 
   const removeTunnel = (id: string) => {
-    setTunnels(prev => prev.filter(tunnel => tunnel.id !== id));
+    setTunnels(prev => prev.filter(tunnel => {
+      if (tunnel.id === id) {
+        try{tunnel.context.cleanup();} catch (e){console.log("Error cleaning up leptos context:",e)}
+      }
+      return tunnel.id !== id
+    }));
   };
 
   const TunnelRenderer = () => (
     <>
       {tunnels.map(tunnel => 
-        createPortal(<WithLeptosContext context={tunnel.context}>{tunnel.node}</WithLeptosContext>, tunnel.element, tunnel.id)
+        createPortal(<SHTMLContext.Provider value={tunnel.context}>{tunnel.node}</SHTMLContext.Provider>, tunnel.element, tunnel.id)
       )}
     </>
   );
+
+  useEffect(() => {
+    return () => {
+      tunnels.forEach(tunnel => {
+        try{tunnel.context.cleanup();} catch (e){console.log("Error cleaning up leptos context:",e)}
+      });
+    }
+  })
 
   return {
     addTunnel,
@@ -66,10 +90,15 @@ export function useLeptosTunnels() {
   };
 }
 
-
-const WithLeptosContext: React.FC<{ context:LeptosContext,children:ReactNode }> = ({context,children}) => {
+/*
+const withLeptosContext = (context:LeptosContext,children:ReactNode) => {
+  console.log("WithLeptosContext",context);
   useEffect(() => {
-    return () => {context.cleanup();}
+    return () => {
+      console.log("Cleaning up leptos context:",context);
+      try{context.cleanup();} catch (e){console.log("Error cleaning up leptos context:",e)}
+    }
   },[]);
   return <SHTMLContext.Provider value={context}>{children}</SHTMLContext.Provider>
 }
+  */
