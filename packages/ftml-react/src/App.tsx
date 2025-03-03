@@ -3,10 +3,9 @@ import { useState } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
-import { FTMLSetup } from "./ftml-react/lib.tsx"
-
-import * as FTML from "./ftml-react/lib";
-import { TestDocument, TestFragmentA, TestFragmentB } from './ftml-react/test.tsx'
+import { FTMLSetup } from "@kwarc/ftml-react"
+import * as FTML from "@kwarc/ftml-react";
+import { TestDocument, TestFragmentA, TestFragmentB } from './test.tsx'
 
 FTML.setDebugLog();
 FTML.setServerUrl("https://mmt.beta.vollki.kwarc.info");

@@ -14,7 +14,8 @@
     "vite-plugin-wasm": "3.4.1",
     "vite-plugin-top-level-await": "^1.0.2",
     "react": "^18.3.1",
-    "react-dom": "^18.3.1"
+    "react-dom": "^18.3.1",
+    "@kwarc/ftml-react":"0.0.3"
   },
   "devDependencies": {
     "@eslint/js": "^9.17.0",
