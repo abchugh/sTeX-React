@@ -13,13 +13,13 @@ function App() {
       />
       <FTMLFragment
         fragment={{
-          uri: "https://stexmmt.mathhub.info/:sTeX?a=sTeX/DemoExamples&d=problemtest&l=en&e=exercise_3",
+          uri: "https://mathhub.info?a=sTeX/DemoExamples&d=problemtest&l=en&e=exercise_3",
         }}
         exercises={(e) => console.log(e)}
       />
       <FTMLFragment
         fragment={{
-          uri: "https://stexmmt.mathhub.info/:sTeX?a=sTeX/DemoExamples&d=problemtest&l=en&e=exercise_1",
+          uri: "https://mathhub.info?a=sTeX/DemoExamples&d=problemtest&l=en&e=exercise_1",
         }}
       />
     </>
