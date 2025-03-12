@@ -5,7 +5,9 @@ export function hasFtmlAttribute(node) {
     for (let i = 0; i < attributes.length; i++) {
         if (attributes[i].name === 'data-flams-src') {
             const src = attributes[i].value;
-            node.setAttribute('src',src.replace('srv:', window.FLAMS_SERVER_URL));
+            if (typeof window !== "undefined") {
+              node.setAttribute('src',src.replace('srv:', window.FLAMS_SERVER_URL));
+            }
             break;
         }
     }
@@ -20,9 +22,6 @@ export function hasFtmlAttribute(node) {
   return false;
 }
 
-window.FLAMS_SERVER_URL = "";
-
-export function setServerUrl(url) {
-  window.FLAMS_SERVER_URL = url;
-  set_server_url(url);
+if (typeof window !== "undefined") {
+  window.FLAMS_SERVER_URL = "";
 }

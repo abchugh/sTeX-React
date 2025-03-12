@@ -7,6 +7,7 @@ const nextConfig: NextConfig = {
     config.experiments = {
       ...config.experiments,
       asyncWebAssembly: true,
+      topLevelAwait: true,
     };
     config.optimization.moduleIds = "named";
 
