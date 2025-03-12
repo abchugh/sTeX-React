@@ -1,8 +1,10 @@
 import { createContext, ReactNode, useEffect, useState } from "react";
 import { createPortal } from "react-dom";
-import { LeptosContext ,ftml_setup} from "./ftml-viewer/ftml_viewer";
 
-export const SHTMLContext = createContext<LeptosContext | undefined>(undefined);
+
+import { LeptosContext } from "./ftml-viewer/ftml-viewer-base";//"./ftml-viewer/ftml-viewer-base";//
+
+export const FTMLContext = createContext<LeptosContext | undefined>(undefined);
 
 interface Tunnel {
   element: Element;
@@ -22,14 +24,25 @@ export function useLeptosTunnel() {
   };
 
   const removeTunnel = () => {
+    if (tunnel) {
+      try{tunnel.context.cleanup();} catch (e){console.log("Error cleaning up leptos context:",e)}
+    }
     setTunnel(undefined);
   };
 
   const TunnelRenderer = () => (
       tunnel? 
-        createPortal(<WithLeptosContext context={tunnel.context}>{tunnel.node}</WithLeptosContext>, tunnel.element, tunnel.id)
+        createPortal(<FTMLContext.Provider value={tunnel.context}>{tunnel.node}</FTMLContext.Provider>, tunnel.element, tunnel.id)
         : <></>
   );
+
+  useEffect(() => {
+    return () => {
+      if (tunnel) {
+        try{tunnel.context.cleanup();} catch (e){console.log("Error cleaning up leptos context:",e)}
+      }
+    }
+  })
 
   return {
     addTunnel,
@@ -48,32 +61,33 @@ export function useLeptosTunnels() {
   };
 
   const removeTunnel = (id: string) => {
-    setTunnels(prev => prev.filter(tunnel => tunnel.id !== id));
+    setTunnels(prev => prev.filter(tunnel => {
+      if (tunnel.id === id) {
+        try{tunnel.context.cleanup();} catch (e){console.log("Error cleaning up leptos context:",e)}
+      }
+      return tunnel.id !== id
+    }));
   };
 
   const TunnelRenderer = () => (
     <>
       {tunnels.map(tunnel => 
-        createPortal(<WithLeptosContext context={tunnel.context}>{tunnel.node}</WithLeptosContext>, tunnel.element, tunnel.id)
+        createPortal(<FTMLContext.Provider value={tunnel.context}>{tunnel.node}</FTMLContext.Provider>, tunnel.element, tunnel.id)
       )}
     </>
   );
+
+  useEffect(() => {
+    return () => {
+      tunnels.forEach(tunnel => {
+        try{tunnel.context.cleanup();} catch (e){console.log("Error cleaning up leptos context:",e)}
+      });
+    }
+  })
 
   return {
     addTunnel,
     removeTunnel,
     TunnelRenderer
   };
-}
-
-
-const WithLeptosContext: React.FC<{ context:LeptosContext,children:ReactNode }> = ({context,children}) => {
-  console.log("WithLeptosContext",context);
-  useEffect(() => {
-    return () => {
-      console.log("Cleaning up leptos context:",context);
-      try{context.cleanup();} catch (e){console.log("Error cleaning up leptos context:",e)}
-    }
-  },[]);
-  return <SHTMLContext.Provider value={context}>{children}</SHTMLContext.Provider>
 }

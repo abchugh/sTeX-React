@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { FLAMSServer } from "../../utils/flam";
-import { FTMLFragment } from "../../ftml-utils/document";
-import { setServerUrl } from "../../ftml-utils/lib";
+import { FTMLFragment } from "../../ftml-utils";
+import { setServerUrl } from "../../ftml-utils";
 const FLAMS_SERVER_URL = "https://mmt.beta.vollki.kwarc.info";
 const server = new FLAMSServer(FLAMS_SERVER_URL);
 setServerUrl("https://mmt.beta.vollki.kwarc.info");
@@ -14,7 +14,7 @@ const Test = () => {
   return (
     <div>
       <FTMLFragment
-        opt={{
+        fragment={{
           uri: "https://mathhub.info?a=sTeX/DemoExamples&d=problemtest&l=en&e=exercise_1",
         }}
       />
