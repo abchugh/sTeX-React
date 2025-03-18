@@ -83,6 +83,8 @@ export type DocumentElementURI = string;
 
 export type ParagraphKind = "Definition" | "Assertion" | "Paragraph" | "Proof" | "SubProof" | "Example";
 
+export type Language = "en" | "de" | "fr" | "ro" | "ar" | "bg" | "ru" | "fi" | "tr" | "sl";
+
 export interface FileData {
     rel_path: string;
     format: string;
@@ -115,7 +117,7 @@ export type Institution = { type: "university"; title: string; place: string; co
 
 export type LOKind = { type: "Definition" } | { type: "Example" } | ({ type: "Exercise" } & CognitiveDimension) | ({ type: "SubExercise" } & CognitiveDimension);
 
-export type Language = "en" | "de" | "fr" | "ro" | "ar" | "bg" | "ru" | "fi" | "tr" | "sl";
+export type ArchiveId = string;
 
 export type DocumentURI = string;
 
@@ -128,15 +130,13 @@ export interface FileStateSummary {
     last_changed: Timestamp;
 }
 
-export type ArchiveId = string;
-
 export type Name = string;
 
 export type SearchResultKind = "Document" | "Paragraph" | "Definition" | "Example" | "Assertion" | "Exercise";
 
 export type SearchResult = { Document: DocumentURI } | { Paragraph: { uri: DocumentElementURI; fors: SymbolURI[]; def_like: boolean; kind: SearchResultKind } };
 
-export interface FragmentQueryOpts {
+export interface QueryFilter {
     allow_documents?: boolean;
     allow_paragraphs?: boolean;
     allow_definitions?: boolean;
@@ -145,8 +145,6 @@ export interface FragmentQueryOpts {
     allow_exercises?: boolean;
     definition_like_only?: boolean;
 }
-
-export type QueryFilter = "Symbols" | { Fragments: FragmentQueryOpts };
 
 export type SectionLevel = "Part" | "Chapter" | "Section" | "Subsection" | "Subsubsection" | "Paragraph" | "Subparagraph";
 
