@@ -31,7 +31,7 @@ export default function Home() {
           [Fragment below]
           <FTMLFragment
             fragment={{
-              uri: "https://mathhub.info?a=smglom/logic&p=mod&m=KRR&s=KRR",
+              uri: "https://mathhub.info?a=courses/Jacobs/GenCS/course&p=pl0/slides&d=abstract-consistency&l=en&e=REF1",
             }}
           />
           [Fragment above]
