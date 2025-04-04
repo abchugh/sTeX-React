@@ -1,9 +1,10 @@
 import { useEffect } from "react";
 import { FLAMSServer } from "../../utils/flam";
-import { FTMLDocument, getFlamsServer } from "../../ftml-utils";
+import { FTMLDocument, getFlamsServer, setDebugLog } from "../../ftml-utils";
 import { setServerUrl } from "../../ftml-utils";
 
 setServerUrl("https://mmt.beta.vollki.kwarc.info");
+setDebugLog();
 
 const Test = () => {
   useEffect(() => {
@@ -14,7 +15,7 @@ const Test = () => {
     <div>
       <FTMLDocument
         document={{
-          uri: "https://mathhub.info?a=courses/FAU/AI/course&p=game-play/slides&d=alphago-now&l=en",
+          uri: "https://mathhub.info?a=courses/FAU/AI/course&p=logic/sec&d=atp1&l=en",
           toc:"GET"
         }}
       />
