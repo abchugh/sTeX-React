@@ -8,6 +8,13 @@ const Window:{FLAMS_SERVER_URL:string} = typeof window !== "undefined" ? ((windo
  */
 export function setDebugLog() { FTML.set_debug_log(); }
 
+/**
+ * Injects the given CSS rule into the header of the DOM (if adequate and not duplicate)
+ */
+export function injectCss(css:FTML.CSS) {
+  FTML.injectCss(css);
+}
+
 /** 
  * Get the FLAMS server used globally
  */
