@@ -30,6 +30,7 @@ export function getServerUrl(): string {
   return Window.FLAMS_SERVER_URL;
 }
 
+
 /**
  * Configuration for rendering FTML content
  */
@@ -71,28 +72,11 @@ export interface FTMLConfig {
   onSlide?: (
     uri: FTML.DocumentElementURI,
   ) => FTML.LeptosContinuation | undefined;
-  /**
-   * configuration for problems
-   */
-  problems?: ProblemConfig;
+  
+  problemStates?: FTML.ProblemStates | undefined,
+  onProblem?: ((response: FTML.ProblemResponse) => void) | undefined,
 }
 
-/**
- * What to do with problems?
- */
-export type ProblemConfig =
-  /**
-   * use existent feedback
-   */
-  | [FTML.DocumentElementURI, FTML.ProblemFeedback][]
-  /**
-   * use existent solutions
-   */
-  | [FTML.DocumentElementURI, FTML.Solutions][]
-  /**
-   * call this function whenever user response changes
-   */
-  | ((response: FTML.ProblemResponse) => void);
 
 /**
  * sets up a leptos context for rendering FTML documents or fragments.
@@ -112,7 +96,6 @@ export function ftmlSetup(
   then: FTML.LeptosContinuation,
   cfg?: FTMLConfig,
 ): FTML.FTMLMountHandle {
-  const [exOpt, onProblem] = splitProblemOptions(cfg);
   return FTML.ftml_setup(
     to,
     then,
@@ -122,8 +105,8 @@ export function ftmlSetup(
     cfg?.onParagraph,
     cfg?.onInputref,
     cfg?.onSlide,
-    exOpt,
-    onProblem,
+    cfg?.onProblem,
+    cfg?.problemStates
   );
 }
 
@@ -142,7 +125,6 @@ export function renderDocument(
   context?: FTML.LeptosContext,
   cfg?: FTMLConfig,
 ): FTML.FTMLMountHandle {
-  const [exOpt, onProblem] = splitProblemOptions(cfg);
   return FTML.render_document(
     to,
     document,
@@ -153,8 +135,8 @@ export function renderDocument(
     cfg?.onParagraph,
     cfg?.onInputref,
     cfg?.onSlide,
-    exOpt,
-    onProblem,
+    cfg?.onProblem,
+    cfg?.problemStates
   );
 }
 
@@ -173,7 +155,6 @@ export function renderFragment(
   context?: FTML.LeptosContext,
   cfg?: FTMLConfig,
 ): FTML.FTMLMountHandle {
-  const [exOpt, onProblem] = splitProblemOptions(cfg);
   return FTML.render_fragment(
     to,
     fragment,
@@ -184,40 +165,7 @@ export function renderFragment(
     cfg?.onParagraph,
     cfg?.onInputref,
     cfg?.onSlide,
-    exOpt,
-    onProblem,
+    cfg?.onProblem,
+    cfg?.problemStates
   );
-}
-
-function splitProblemOptions(
-  cfg?: FTMLConfig,
-): [
-  FTML.ProblemOption | undefined,
-  ((response: FTML.ProblemResponse) => void) | undefined,
-] {
-  let exOpt: FTML.ProblemOption | undefined = undefined;
-  let onProblem: ((response: FTML.ProblemResponse) => void) | undefined =
-    undefined;
-  if (cfg?.problems) {
-    if (Array.isArray(cfg.problems)) {
-      if (cfg.problems.length > 0) {
-        if (cfg.problems[0][1] instanceof FTML.ProblemFeedback) {
-          exOpt = {
-            WithFeedback: <[FTML.DocumentElementURI, FTML.ProblemFeedback][]>(
-              cfg.problems
-            ),
-          };
-        } else {
-          exOpt = {
-            WithSolutions: <[FTML.DocumentElementURI, FTML.Solutions][]>(
-              cfg.problems
-            ),
-          };
-        }
-      }
-    } else {
-      onProblem = cfg.problems;
-    }
-  }
-  return [exOpt, onProblem];
 }
