@@ -3,9 +3,9 @@
 export const memory: WebAssembly.Memory;
 export const injectCss: (a: number) => void;
 export const set_debug_log: () => void;
-export const ftml_setup: (a: number, b: number, c: number, d: number, e: number, f: number, g: number, h: number, i: number, j: number) => number;
-export const render_document: (a: number, b: number, c: number, d: number, e: number, f: number, g: number, h: number, i: number, j: number, k: number, l: number) => void;
-export const render_fragment: (a: number, b: number, c: number, d: number, e: number, f: number, g: number, h: number, i: number, j: number, k: number, l: number) => void;
+export const ftml_setup: (a: number, b: number, c: number, d: number, e: number, f: number, g: number, h: number) => number;
+export const render_document: (a: number, b: number, c: number, d: number, e: number, f: number, g: number, h: number, i: number, j: number) => void;
+export const render_fragment: (a: number, b: number, c: number, d: number, e: number, f: number, g: number, h: number, i: number, j: number) => void;
 export const __wbg_ftmlmounthandle_free: (a: number, b: number) => void;
 export const ftmlmounthandle_unmount: (a: number, b: number) => void;
 export const set_server_url: (a: number, b: number) => void;
