@@ -1,6 +1,6 @@
 import { FTMLFragment, setDebugLog, setServerUrl } from "../../ftml-utils";
 import { ProblemState } from "../../ftml-utils/ftml-viewer/ftml-viewer-base/ftml-viewer-base";
-setServerUrl("https://mmt.beta.vollki.kwarc.info");
+setServerUrl("https://mathhub.info");
 setDebugLog();
 
 const html = `<div class="rustex_contents" data-ftml-problem="recursive1" data-ftml-autogradable="true">
@@ -18,7 +18,7 @@ const html = `<div class="rustex_contents" data-ftml-problem="recursive1" data-f
 
 const BugPage = () => {
   const uri =
-    "https://stexmmt.mathhub.info/:sTeX?a=courses/FAU/A…blems&p=pretest/quiz&d=recursive1&l=en&e=exercise";
+    "https://stexmmt.mathhub.info/:sTeX?a=courses/FAU/AI/problems&p=pretest/quiz&d=recursive1&l=en&e=exercise";
   const problemState: ProblemState = {
     type: "Interactive",
     current_response: { uri, responses: [[true, true, false, false]] },
@@ -27,7 +27,7 @@ const BugPage = () => {
     <div>
       <FTMLFragment
         key={uri}
-        fragment={{ html }}
+        fragment={{ html:html, uri:uri }}
         problemStates={new Map([[uri, problemState]])}
         onProblem={(response) => {
           console.log("from wasm", JSON.stringify(response));
