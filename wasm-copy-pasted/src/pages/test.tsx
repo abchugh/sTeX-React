@@ -1,7 +1,5 @@
 import { useEffect } from "react";
-import { FLAMSServer } from "../../utils/flam";
-import { FTMLDocument, getFlamsServer, setDebugLog } from "../../ftml-utils";
-import { setServerUrl } from "../../ftml-utils";
+import { FTMLDocument, getFlamsServer, setDebugLog, setServerUrl } from "../../ftml-utils";
 
 setServerUrl("https://mmt.beta.vollki.kwarc.info");
 setDebugLog();
