@@ -145,6 +145,28 @@ const CLOSURE_DTORS = (typeof FinalizationRegistry === 'undefined')
     wasm.__wbindgen_export_4.get(state.dtor)(state.a, state.b)
 });
 
+function makeClosure(arg0, arg1, dtor, f) {
+    const state = { a: arg0, b: arg1, cnt: 1, dtor };
+    const real = (...args) => {
+        // First up with a closure we increment the internal reference
+        // count. This ensures that the Rust closure environment won't
+        // be deallocated while we're invoking it.
+        state.cnt++;
+        try {
+            return f(state.a, state.b, ...args);
+        } finally {
+            if (--state.cnt === 0) {
+                wasm.__wbindgen_export_4.get(state.dtor)(state.a, state.b);
+                state.a = 0;
+                CLOSURE_DTORS.unregister(state);
+            }
+        }
+    };
+    real.original = state;
+    CLOSURE_DTORS.register(real, state, state);
+    return real;
+}
+
 function makeMutClosure(arg0, arg1, dtor, f) {
     const state = { a: arg0, b: arg1, cnt: 1, dtor };
     const real = (...args) => {
@@ -162,28 +184,6 @@ function makeMutClosure(arg0, arg1, dtor, f) {
                 CLOSURE_DTORS.unregister(state);
             } else {
                 state.a = a;
-            }
-        }
-    };
-    real.original = state;
-    CLOSURE_DTORS.register(real, state, state);
-    return real;
-}
-
-function makeClosure(arg0, arg1, dtor, f) {
-    const state = { a: arg0, b: arg1, cnt: 1, dtor };
-    const real = (...args) => {
-        // First up with a closure we increment the internal reference
-        // count. This ensures that the Rust closure environment won't
-        // be deallocated while we're invoking it.
-        state.cnt++;
-        try {
-            return f(state.a, state.b, ...args);
-        } finally {
-            if (--state.cnt === 0) {
-                wasm.__wbindgen_export_4.get(state.dtor)(state.a, state.b);
-                state.a = 0;
-                CLOSURE_DTORS.unregister(state);
             }
         }
     };
@@ -427,13 +427,13 @@ function __wbg_adapter_58(arg0, arg1, arg2) {
     wasm.__wbindgen_export_5(arg0, arg1, addHeapObject(arg2));
 }
 
-function __wbg_adapter_61(arg0, arg1) {
-    wasm.__wbindgen_export_6(arg0, arg1);
+function __wbg_adapter_61(arg0, arg1, arg2) {
+    const ret = wasm.__wbindgen_export_6(arg0, arg1, addHeapObject(arg2));
+    return ret >>> 0;
 }
 
 function __wbg_adapter_64(arg0, arg1, arg2) {
-    const ret = wasm.__wbindgen_export_7(arg0, arg1, addHeapObject(arg2));
-    return ret >>> 0;
+    wasm.__wbindgen_export_7(arg0, arg1, addHeapObject(arg2));
 }
 
 function __wbg_adapter_67(arg0, arg1) {
@@ -2025,33 +2025,33 @@ export function __wbindgen_cb_drop(arg0) {
     return ret;
 };
 
-export function __wbindgen_closure_wrapper16967(arg0, arg1, arg2) {
-    const ret = makeMutClosure(arg0, arg1, 3833, __wbg_adapter_61);
+export function __wbindgen_closure_wrapper18805(arg0, arg1, arg2) {
+    const ret = makeClosure(arg0, arg1, 4675, __wbg_adapter_61);
     return addHeapObject(ret);
 };
 
-export function __wbindgen_closure_wrapper17833(arg0, arg1, arg2) {
-    const ret = makeClosure(arg0, arg1, 4399, __wbg_adapter_64);
+export function __wbindgen_closure_wrapper22662(arg0, arg1, arg2) {
+    const ret = makeMutClosure(arg0, arg1, 4879, __wbg_adapter_64);
     return addHeapObject(ret);
 };
 
-export function __wbindgen_closure_wrapper22759(arg0, arg1, arg2) {
-    const ret = makeMutClosure(arg0, arg1, 4877, __wbg_adapter_67);
+export function __wbindgen_closure_wrapper22664(arg0, arg1, arg2) {
+    const ret = makeMutClosure(arg0, arg1, 4879, __wbg_adapter_67);
     return addHeapObject(ret);
 };
 
-export function __wbindgen_closure_wrapper22866(arg0, arg1, arg2) {
+export function __wbindgen_closure_wrapper22936(arg0, arg1, arg2) {
     const ret = makeMutClosure(arg0, arg1, 4918, __wbg_adapter_70);
     return addHeapObject(ret);
 };
 
-export function __wbindgen_closure_wrapper25331(arg0, arg1, arg2) {
-    const ret = makeMutClosure(arg0, arg1, 4952, __wbg_adapter_73);
+export function __wbindgen_closure_wrapper25243(arg0, arg1, arg2) {
+    const ret = makeMutClosure(arg0, arg1, 4956, __wbg_adapter_73);
     return addHeapObject(ret);
 };
 
-export function __wbindgen_closure_wrapper8409(arg0, arg1, arg2) {
-    const ret = makeMutClosure(arg0, arg1, 2416, __wbg_adapter_58);
+export function __wbindgen_closure_wrapper7919(arg0, arg1, arg2) {
+    const ret = makeMutClosure(arg0, arg1, 2320, __wbg_adapter_58);
     return addHeapObject(ret);
 };
 
