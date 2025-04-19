@@ -70,52 +70,7 @@ export type FragmentOptions = { uri: DocumentElementURI } | { html: string; uri?
  */
 export type TOCOptions = "GET" | { Predefined: TOCElem[] };
 
-export type OMDoc = ({ type: "Slide" } & OMDocSlide) | ({ type: "Document" } & OMDocDocument) | ({ type: "Section" } & OMDocSection) | ({ type: "DocModule" } & OMDocModule<OMDocDocumentElement>) | ({ type: "Module" } & OMDocModule<OMDocDeclaration>) | ({ type: "DocMorphism" } & OMDocMorphism<OMDocDocumentElement>) | ({ type: "Morphism" } & OMDocMorphism<OMDocDeclaration>) | ({ type: "DocStructure" } & OMDocStructure<OMDocDocumentElement>) | ({ type: "Structure" } & OMDocStructure<OMDocDeclaration>) | ({ type: "DocExtension" } & OMDocExtension<OMDocDocumentElement>) | ({ type: "Extension" } & OMDocExtension<OMDocDeclaration>) | ({ type: "SymbolDeclaration" } & OMDocSymbol) | ({ type: "Variable" } & OMDocVariable) | ({ type: "Paragraph" } & OMDocParagraph) | ({ type: "Problem" } & OMDocProblem) | { type: "Term"; uri: DocumentElementURI; term: Term } | { type: "DocReference"; uri: DocumentURI; title: string | undefined } | ({ type: "Other" } & string);
-
 export type LeptosContinuation = (e:HTMLDivElement,o:LeptosContext) => void;
-
-export interface OMDocSymbol {
-    uri: SymbolURI;
-    df: Term | undefined;
-    tp: Term | undefined;
-    arity: ArgSpec;
-    macro_name: string | undefined;
-}
-
-export type OMDocDeclaration = ({ type: "Symbol" } & OMDocSymbol) | ({ type: "NestedModule" } & OMDocModule<OMDocDeclaration>) | ({ type: "Structure" } & OMDocStructure<OMDocDeclaration>) | ({ type: "Morphism" } & OMDocMorphism<OMDocDeclaration>) | ({ type: "Extension" } & OMDocExtension<OMDocDeclaration>);
-
-export interface OMDocExtension<E> {
-    uri: SymbolURI;
-    target: SymbolURI;
-    uses: ModuleURI[];
-    children: E[];
-}
-
-export interface OMDocStructure<E> {
-    uri: SymbolURI;
-    macro_name: string | undefined;
-    uses: ModuleURI[];
-    extends: ModuleURI[];
-    children: E[];
-    extensions: [SymbolURI, OMDocSymbol[]][];
-}
-
-export interface OMDocMorphism<E> {
-    uri: SymbolURI;
-    total: boolean;
-    target: ModuleURI | undefined;
-    uses: ModuleURI[];
-    children: E[];
-}
-
-export interface OMDocModule<E> {
-    uri: ModuleURI;
-    imports: ModuleURI[];
-    uses: ModuleURI[];
-    metatheory: ModuleURI | undefined;
-    signature: Language | undefined;
-    children: E[];
-}
 
 export type OMDocDocumentElement = ({ type: "Slide" } & OMDocSlide) | ({ type: "Section" } & OMDocSection) | ({ type: "Module" } & OMDocModule<OMDocDocumentElement>) | ({ type: "Morphism" } & OMDocMorphism<OMDocDocumentElement>) | ({ type: "Structure" } & OMDocStructure<OMDocDocumentElement>) | ({ type: "Extension" } & OMDocExtension<OMDocDocumentElement>) | { type: "DocumentReference"; uri: DocumentURI; title: string | undefined } | ({ type: "Variable" } & OMDocVariable) | ({ type: "Paragraph" } & OMDocParagraph) | ({ type: "Problem" } & OMDocProblem) | { type: "TopTerm"; uri: DocumentElementURI; term: Term } | ({ type: "SymbolDeclaration" } & SymbolURI|OMDocSymbol);
 
@@ -190,6 +145,51 @@ export interface Gotto {
     uri: DocumentElementURI;
     timestamp?: Timestamp | undefined;
 }
+
+export interface OMDocSymbol {
+    uri: SymbolURI;
+    df: Term | undefined;
+    tp: Term | undefined;
+    arity: ArgSpec;
+    macro_name: string | undefined;
+}
+
+export type OMDocDeclaration = ({ type: "Symbol" } & OMDocSymbol) | ({ type: "NestedModule" } & OMDocModule<OMDocDeclaration>) | ({ type: "Structure" } & OMDocStructure<OMDocDeclaration>) | ({ type: "Morphism" } & OMDocMorphism<OMDocDeclaration>) | ({ type: "Extension" } & OMDocExtension<OMDocDeclaration>);
+
+export interface OMDocExtension<E> {
+    uri: SymbolURI;
+    target: SymbolURI;
+    uses: ModuleURI[];
+    children: E[];
+}
+
+export interface OMDocStructure<E> {
+    uri: SymbolURI;
+    macro_name: string | undefined;
+    uses: ModuleURI[];
+    extends: ModuleURI[];
+    children: E[];
+    extensions: [SymbolURI, OMDocSymbol[]][];
+}
+
+export interface OMDocMorphism<E> {
+    uri: SymbolURI;
+    total: boolean;
+    target: ModuleURI | undefined;
+    uses: ModuleURI[];
+    children: E[];
+}
+
+export interface OMDocModule<E> {
+    uri: ModuleURI;
+    imports: ModuleURI[];
+    uses: ModuleURI[];
+    metatheory: ModuleURI | undefined;
+    signature: Language | undefined;
+    children: E[];
+}
+
+export type OMDoc = ({ type: "Slide" } & OMDocSlide) | ({ type: "Document" } & OMDocDocument) | ({ type: "Section" } & OMDocSection) | ({ type: "DocModule" } & OMDocModule<OMDocDocumentElement>) | ({ type: "Module" } & OMDocModule<OMDocDeclaration>) | ({ type: "DocMorphism" } & OMDocMorphism<OMDocDocumentElement>) | ({ type: "Morphism" } & OMDocMorphism<OMDocDeclaration>) | ({ type: "DocStructure" } & OMDocStructure<OMDocDocumentElement>) | ({ type: "Structure" } & OMDocStructure<OMDocDeclaration>) | ({ type: "DocExtension" } & OMDocExtension<OMDocDocumentElement>) | ({ type: "Extension" } & OMDocExtension<OMDocDeclaration>) | ({ type: "SymbolDeclaration" } & OMDocSymbol) | ({ type: "Variable" } & OMDocVariable) | ({ type: "Paragraph" } & OMDocParagraph) | ({ type: "Problem" } & OMDocProblem) | { type: "Term"; uri: DocumentElementURI; term: Term } | { type: "DocReference"; uri: DocumentURI; title: string | undefined } | ({ type: "Other" } & string);
 
 export type SolutionData = { Solution: { html: string; answer_class: string | undefined } } | { ChoiceBlock: ChoiceBlock } | { FillInSol: FillInSol };
 
