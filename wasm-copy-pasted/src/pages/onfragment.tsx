@@ -8,7 +8,7 @@ const SectionWrap: React.FC<{ uri: string; children: ReactNode }> = ({
   children,
 }) => {
   return (
-    <div style={{ border: "1px solid red", margin: "1em 0", width: "100%" }}>
+    <div style={{ border: "1px solid red", margin: "1em 0", width: "fit-content" }}>
       <div style={{ textAlign: "center" }}>
         <p>This is the start of a section: {uri}!</p>
       </div>
@@ -26,9 +26,9 @@ const OnFragmentPage = () => {
   return (
     <div>
       <FTMLDocument
-        document={{ uri, toc: undefined }}
+        document={{ uri, toc: "GET" }}
         onFragment={(uri, kind) => {
-              if (uri.includes('&e=section')) {
+              if (kind.type === "Section") {
                 return (ch) => <SectionWrap uri={uri}>{ch}</SectionWrap>;
               }
             }}
