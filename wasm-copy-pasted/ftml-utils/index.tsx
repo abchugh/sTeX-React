@@ -3,6 +3,8 @@ import * as FTML from "./ftml-viewer/ftml-viewer-base";//"./ftml-viewer/ftml-vie
 
 import React, { ReactNode, useContext, useEffect, useRef } from "react";
 import { FTMLContext, useLeptosTunnel, useLeptosTunnels } from "./leptos";
+export { Solutions } from "./ftml-viewer/ftml-viewer-base";
+export type { ProblemState, QuizProblem } from "./ftml-viewer/ftml-viewer-base";
 
 /** 
  * sets the server url. Reexported for **emphasis**.
