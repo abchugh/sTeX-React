@@ -2034,6 +2034,11 @@ export function __wbindgen_cb_drop(arg0) {
     return ret;
 };
 
+export function __wbindgen_closure_wrapper11065(arg0, arg1, arg2) {
+    const ret = makeMutClosure(arg0, arg1, 2746, __wbg_adapter_58);
+    return addHeapObject(ret);
+};
+
 export function __wbindgen_closure_wrapper16918(arg0, arg1, arg2) {
     const ret = makeMutClosure(arg0, arg1, 3851, __wbg_adapter_61);
     return addHeapObject(ret);
@@ -2061,11 +2066,6 @@ export function __wbindgen_closure_wrapper22988(arg0, arg1, arg2) {
 
 export function __wbindgen_closure_wrapper25293(arg0, arg1, arg2) {
     const ret = makeMutClosure(arg0, arg1, 4968, __wbg_adapter_76);
-    return addHeapObject(ret);
-};
-
-export function __wbindgen_closure_wrapper8776(arg0, arg1, arg2) {
-    const ret = makeMutClosure(arg0, arg1, 1801, __wbg_adapter_58);
     return addHeapObject(ret);
 };
 
