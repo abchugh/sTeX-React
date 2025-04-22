@@ -37,9 +37,6 @@ const CourseNotesPage: NextPage = () => {
 
   return (
     <FTMLSetup>
-      {/* FTML does not update if the props (i.e., gottos) are changed.
-          Therefore, we only render it when all the props are ready. 
-          // Skip gottos for now. Seems to be causing rendering to be skipped*/}
       <FTMLDocument
         key={notes}
         /* TOC:{Predefined: toc} is throwing an error. */
