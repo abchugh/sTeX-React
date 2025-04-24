@@ -1,7 +1,6 @@
 import { useEffect } from "react";
-import { FTMLFragment, getFlamsServer, Solutions } from "../../ftml-utils";
-import { ProblemResponse } from "../../ftml-utils/flams";
-import { ChoiceBlock, ProblemState, QuizProblem } from "../../ftml-utils/ftml-viewer/ftml-viewer-base/ftml-viewer-base";
+import { FTMLFragment, getFlamsServer, setDebugLog, setServerUrl, Solutions } from "../../ftml-utils";
+import { ChoiceBlock, ProblemState, QuizProblem, ProblemResponse } from "../../ftml-utils/ftml-viewer/ftml-viewer-base/ftml-viewer-base";
 
 /*function getProblemState(
   isFrozen: boolean,
@@ -67,8 +66,12 @@ const solution: string =
 
 const r: ProblemResponse = {
   uri: "https://mathhub.info?a=courses/FAU/AI/problems&p=pretest/quiz&d=dfa1&l=en&e=problem",
-  responses: [1],
+  responses: [{ type: "SingleChoice", value: 1}],
 };
+
+setServerUrl("http://127.0.0.1:3000");
+setDebugLog();
+
 const BugPage = () => {
   const sol = Solutions.from_jstring(solution)?.to_solutions()[0] as {
     ChoiceBlock: ChoiceBlock;
