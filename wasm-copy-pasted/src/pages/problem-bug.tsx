@@ -21,7 +21,9 @@ const BugPage = () => {
     "https://stexmmt.mathhub.info/:sTeX?a=courses/FAU/AI/problems&p=pretest/quiz&d=recursive1&l=en&e=exercise";
   const problemState: ProblemState = {
     type: "Interactive",
-    current_response: { uri, responses: [[true, true, false, false]] },
+    current_response: { uri, responses: [
+      { type: "MultipleChoice", value:[true, true, false, false]}
+    ] },
   };
   return (
     <div>

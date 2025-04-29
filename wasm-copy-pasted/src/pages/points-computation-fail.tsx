@@ -67,7 +67,7 @@ export function ProblemViewer({
 const BugPage = () => {
   const r: ProblemResponse = {
     uri: "https://mathhub.info?a=courses/FAU/AI/problems&p=pretest/quiz&d=sets1&l=en&e=problem",
-    responses: [[true, false, true, false]],
+    responses: [{ type: "MultipleChoice", value: [true, false, true, false]}],
   };
   const sol = Solutions.from_jstring(solution)?.to_solutions()[0] as {ChoiceBlock: ChoiceBlock};
   console.log("Solution",sol);

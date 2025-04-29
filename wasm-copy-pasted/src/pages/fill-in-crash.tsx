@@ -63,7 +63,7 @@ export function ProblemViewer({
 const BugPage = () => {
   const r: ProblemResponse = {
     uri: "https://mathhub.info?a=courses/FAU/AI/problems&p=pretest/quiz&d=pseudocode1&l=en&e=problem",
-    responses: [""],
+    responses: [{ type: "Fillinsol", value: ""}],
   };
   const sol = Solutions.from_jstring(solution)?.to_solutions()[0] as {FillInSol: FillInSol};
   //console.log("Solution:",sol.FillInSol.opts);
