@@ -12,7 +12,7 @@ const wrongUri =
 const problemState: ProblemState = {
   type: "Interactive",
   current_response: {
-    uri: "https://stexmmt.mathhub.info/:sTeX?a=courses/FAU/KRMT/hwexam&p=quizzes/SS25&d=quiz01&l=en&e=problem",
+    uri: correctUri,
     responses: [
       {
         type: "MultipleChoice",
