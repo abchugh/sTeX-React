@@ -1,6 +1,6 @@
 import type { NextPage } from "next";
 import { useRouter } from "next/router";
-import { ReactNode, useEffect, useState } from "react";
+import { memo, ReactNode, useEffect, useState } from "react";
 import {
   FTMLDocument,
   FTMLSetup,
@@ -13,23 +13,29 @@ setServerUrl("https://mathhub.info");
 setDebugLog();
 
 const notes =
-  "https://mathhub.info?a=courses/FAU/KRMT/course&p=dennis/course&d=notes&l=en";
+  "https://mathhub.info?a=courses/FAU/KRMT/course&p=dennis/course&d=preliminaries&l=en";
 async function getDocumentSections(notesUri: string) {
   return (await getFlamsServer().contentToc({ uri: notesUri })) ?? [[], []];
 }
 
-const FragmentWrap: React.FC<{
+const FragmentWrap = memo<{
   uri: string;
   fragmentKind: "Section" | "Slide" | "Paragraph";
   children: ReactNode;
-}> = ({ uri, fragmentKind, children }) => {
+}>(({ uri, fragmentKind, children }) => {
   console.log("wrap-level");
   return (
     <div fragment-uri={uri} fragment-kind={fragmentKind}>
       {children}
     </div>
   );
-};
+}, (prevProps, nextProps) => {
+  console.log("checked memoization");
+  return prevProps.uri === nextProps.uri && prevProps.fragmentKind === nextProps.fragmentKind;
+});
+
+FragmentWrap.displayName = 'FragmentWrap';
+
 const CourseNotesPage: NextPage = () => {
   const router = useRouter();
   const [toc, setToc] = useState<TOCElem[] | undefined>(undefined);
