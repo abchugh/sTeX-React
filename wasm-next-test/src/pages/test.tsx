@@ -1,18 +1,25 @@
 import { ReactNode, useState } from "react";
 import { FTMLDocument, FTMLFragment } from "@kwarc/ftml-react";
+import { ClientDocument, ClientFragment } from "@/clientOnly";
 
 export const TestDocument = () => {
   return (
-    <FTMLDocument
+    <ClientDocument
       document={{
-        uri: "https://stexmmt.mathhub.info/:sTeX?a=sTeX/MathTutorial&d=textbook&l=en",
+        uri: "https://mathhub.info?a=sTeX/MathTutorial&d=textbook&l=en",
         toc: "GET",
+        type: "FromBackend"
       }}
-      onSection={(uri, _) => (ch) => <SectionWrap uri={uri}>{ch}</SectionWrap>}
+      onFragment={(uri, tp) => {
+        if (tp.type === "Section") {
+          return (ch) => <SectionWrap uri={uri}>{ch}</SectionWrap>
+        }
+      }}
       onSectionTitle={(uri, _lvl) => <SectionTitle sec={uri} />}
     />
   );
 };
+export default TestDocument;
 
 const SectionTitle: React.FC<{ sec: string }> = ({ sec }) => {
   return (
@@ -44,9 +51,10 @@ export const TestFragmentA = () => {
   return (
     <>
       <p>Multiple Choice:</p>
-      <FTMLFragment
+      <ClientFragment
         fragment={{
-          uri: "https://stexmmt.mathhub.info/:sTeX?a=sTeX/DemoExamples&d=problemtest&l=en&e=exercise_1",
+          uri: "https://mathhub.info?a=sTeX/DemoExamples&d=problemtest&l=en&e=problem_1",
+          type:"FromBackend"
         }}
       />
     </>
@@ -57,11 +65,12 @@ export const TestFragmentB = () => {
   return (
     <>
       <p>Fillinsol (logs typing):</p>
-      <FTMLFragment
+      <ClientFragment
         fragment={{
-          uri: "https://stexmmt.mathhub.info/:sTeX?a=sTeX/DemoExamples&d=problemtest&l=en&e=exercise_3",
+          uri: "https://mathhub.info?a=sTeX/DemoExamples&d=problemtest&l=en&e=problem_3",
+          type:"FromBackend"
         }}
-        exercises={(e) => console.log(e)}
+        onProblem={(e) => console.log(e)}
       />
     </>
   );
